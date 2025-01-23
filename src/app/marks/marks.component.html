@@ -25,7 +25,7 @@
           <td class="border border-gray-400 px-4 py-2 text-center">
             <button (click)="openUpdateModal(student, i)" class="bg-blue-500 text-white px-2 py-1 rounded">Update</button>
             <button (click)="deleteStudent(i)" class="bg-red-500 text-white px-2 py-1 rounded ml-2">Delete</button>
-            <button (click)="viewChart(i)" class="bg-green-500 text-white px-2 py-1 rounded ml-2">Chart</button>
+            <button (click)="viewRowChart(i)" class="bg-green-500 text-white px-2 py-1 rounded ml-2">Chart</button>
           </td>
         </tr>
       </tbody>
@@ -33,7 +33,7 @@
   
     <div class="mt-5 text-center">
       <button (click)="openModal()" class="bg-purple-500 text-white px-4 py-2 rounded">Add New Student</button>
-      <button (click)="openChartModal()" class="bg-teal-500 text-white px-4 py-2 rounded ml-4">View All Charts</button>
+      <button (click)="openChartModal()" class="bg-teal-500 text-white px-4 py-2 rounded ml-4">Overall Performance Charts</button>
     </div>
 
     <!-- modal -->
@@ -159,12 +159,23 @@
     </div>
 
 
-    <!-- Modal -->
+    <!--All Chart Modal Modal -->
 <div *ngIf="showchartModal" class="modal-overlay">
   <div class="modal-content">
     <h2>Overall Performance</h2>
     <div id="chart" style="width: 100%; height: 400px;"></div>
     <button (click)="closeChartModal()" class="close-modal-btn">Close</button>
+  </div>
+</div>
+
+<!-- Row Modal -->
+<div *ngIf="showRowModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>{{ selectedRowStudent?.name }}'s Performance</h2>
+    <!-- Chart container -->
+    <div id="row-chart" style="width: 100%; height: 400px;"></div>
+    <!-- Close button -->
+    <button (click)="closeRowModal()">Close</button>
   </div>
 </div>
     

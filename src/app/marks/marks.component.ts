@@ -14,12 +14,16 @@ export class MarksComponent implements OnInit{
 
   showModal: boolean = false;
   showchartModal = false;
+  showRowModal: boolean = false;
+
 
   newStudent: any = { name: '', physics: '', math: '', chemistry:'', english:'', hindi:'' };
 
   showUpdateModal:boolean = false;
   selectedStudent: any = {};
   selectedIndex: number | null = null;
+  selectedRowStudent: any = null;
+
 
 
   students = [
@@ -131,14 +135,6 @@ export class MarksComponent implements OnInit{
     this.updateSessionStorage();
   }
 
-  viewChart(index: number) {
-    console.log(`View chart button clicked for student at index ${index}`);
-  }
-
-  viewAllCharts() {
-    console.log('View all charts button clicked.');
-  } 
-
 
   openChartModal() {
     this.showchartModal = true;
@@ -196,8 +192,73 @@ export class MarksComponent implements OnInit{
     myChart.setOption(option);
   }
 
+  
+  viewRowChart(index: number) {
+    this.selectedRowStudent = this.students[index];
+    this.showRowModal = true;
+    setTimeout(() => this.renderRowChart(), 0); // Render after modal opens
+  }
+
+  closeRowModal() {
+    this.showRowModal = false;
+    this.selectedRowStudent = null;
+  }
+
+  renderRowChart() {
+    const chartDom = document.getElementById('row-chart');
+    if (!chartDom) {
+      console.error('Chart container not found');
+      return;
+    }
+
+    const myChart = echarts.init(chartDom);
+    const { physics, math, chemistry, english, hindi } = this.selectedRowStudent;
+    const totalMarks = physics + math + chemistry + english + hindi;
+    const remainingMarks = 500 - totalMarks;
+
+    const option = {
+      title: {
+        text: 'Marks Distribution',
+        left: 'center',
+      },
+      tooltip: {
+        trigger: 'item',
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+      },
+      series: [
+        {
+          name: 'Marks',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            { value: physics, name: 'Physics' },
+            { value: math, name: 'Math' },
+            { value: chemistry, name: 'Chemistry' },
+            { value: english, name: 'English' },
+            { value: hindi, name: 'Hindi' },
+            { value: remainingMarks, name: 'Remaining', itemStyle: { color: '#d3d3d3' } },
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
+    };
+
+    myChart.setOption(option);
+  }
+
 
 }
+
+
 
 
 
