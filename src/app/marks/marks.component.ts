@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import * as echarts from 'echarts';
+
 
 @Component({
   selector: 'app-marks',
@@ -11,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 export class MarksComponent implements OnInit{
 
   showModal: boolean = false;
+  showchartModal = false;
+
   newStudent: any = { name: '', physics: '', math: '', chemistry:'', english:'', hindi:'' };
 
   showUpdateModal:boolean = false;
@@ -134,4 +138,67 @@ export class MarksComponent implements OnInit{
   viewAllCharts() {
     console.log('View all charts button clicked.');
   } 
+
+
+  openChartModal() {
+    this.showchartModal = true;
+  
+    // Use a short delay to ensure the DOM is fully rendered before initializing the chart
+    setTimeout(() => {
+      this.renderChart();
+    }, 0);
+  }
+
+  closeChartModal() {
+    this.showchartModal = false;
+  }
+
+  renderChart() {
+    const chartDom = document.getElementById('chart')!;
+    const myChart = echarts.init(chartDom);
+
+    // Calculate total marks for each student
+    const studentNames = this.students.map((student) => student.name);
+    const totalMarks = this.students.map((student) => {
+      return student.physics + student.math + student.chemistry + student.english + student.hindi;
+    });
+
+    // Configure the chart
+    const option = {
+      title: {
+        text: 'Overall Performance',
+        left: 'center',
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+      },
+      xAxis: {
+        type: 'category',
+        data: studentNames,
+        axisLabel: { rotate: 30, interval: 0 },
+      },
+      yAxis: {
+        type: 'value',
+        max: 500, // Max total marks (100 * 5 subjects)
+      },
+      series: [
+        {
+          data: totalMarks,
+          type: 'bar',
+          barWidth: '50%',
+          itemStyle: { color: '#42A5F5' },
+        },
+      ],
+    };
+
+    // Set the options
+    myChart.setOption(option);
+  }
+
+
 }
+
+
+
+
