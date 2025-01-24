@@ -1,183 +1,248 @@
 <div class="container mx-auto mt-10">
-    <h1 class="text-center text-2xl font-bold mb-5">Student Marks Management</h1>
-    <table class="table-auto border-collapse border border-gray-400 w-full">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border border-gray-400 px-4 py-2">#</th>
-          <th class="border border-gray-400 px-4 py-2">Name</th>
-          <th class="border border-gray-400 px-4 py-2">Physics</th>
-          <th class="border border-gray-400 px-4 py-2">Math</th>
-          <th class="border border-gray-400 px-4 py-2">Chemistry</th>
-          <th class="border border-gray-400 px-4 py-2">English</th>
-          <th class="border border-gray-400 px-4 py-2">Hindi</th>
-          <th class="border border-gray-400 px-4 py-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let student of students; let i = index" class="odd:bg-white even:bg-gray-100">
-          <td class="border border-gray-400 px-4 py-2">{{ i + 1 }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.name }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.physics }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.math }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.chemistry }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.english }}</td>
-          <td class="border border-gray-400 px-4 py-2">{{ student.hindi }}</td>
-          <td class="border border-gray-400 px-4 py-2 text-center">
-            <button (click)="openUpdateModal(student, i)" class="bg-blue-500 text-white px-2 py-1 rounded">Update</button>
-            <button (click)="deleteStudent(i)" class="bg-red-500 text-white px-2 py-1 rounded ml-2">Delete</button>
-            <button (click)="viewRowChart(i)" class="bg-green-500 text-white px-2 py-1 rounded ml-2">Chart</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <div class="mt-5 text-center">
-      <button (click)="openModal()" class="bg-purple-500 text-white px-4 py-2 rounded">Add New Student</button>
-      <button (click)="openChartModal()" class="bg-teal-500 text-white px-4 py-2 rounded ml-4">Overall Performance Charts</button>
-    </div>
+  <h1 class="text-center text-2xl font-bold mb-5">Student Marks Management</h1>
+  <table class="professional-table">
+    <thead>
+      <tr class="">
+        <th class="">#</th>
+        <th class="">Name</th>
+        <th class="">Physics</th>
+        <th class="">Math</th>
+        <th class="">Chemistry</th>
+        <th class="">English</th>
+        <th class="">Hindi</th>
+        <th class="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i = index" class="">
+        <td class="">{{ i + 1 }}</td>
+        <td class="">{{ student.name }}</td>
+        <td class="">{{ student.physics }}</td>
+        <td class="">{{ student.math }}</td>
+        <td class="">{{ student.chemistry }}</td>
+        <td class="">{{ student.english }}</td>
+        <td class="">{{ student.hindi }}</td>
+        <td class="">
+          <button
+            (click)="openUpdateModal(student, i)"
+            class="bg-blue-500 text-white px-2 py-1 rounded"
+          >
+            Update
+          </button>
+          <button
+            (click)="deleteStudent(i)"
+            class="bg-red-500 text-white px-2 py-1 rounded ml-2"
+          >
+            Delete
+          </button>
+          <button
+            (click)="viewRowChart(i)"
+            class="bg-green-500 text-white px-2 py-1 rounded ml-2"
+          >
+            Chart
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <!-- modal -->
-    <div *ngIf="showModal" class="modal">
-      <div class="modal-content">
-        <span class="close" (click)="closeModal()">&times;</span>
-        <h2>Add Student</h2>
-        <form (ngSubmit)="addStudent()">
-          <label for="name">Name:</label>
-          <input type="text" id="name" [(ngModel)]="newStudent.name" name="name"  required />
-    
-          <label for="physics">Physics Marks:</label>
-          <input type="number" id="physics" [(ngModel)]="newStudent.physics" name="physics"         min="0"
-          max="100" required />
-    
-          <label for="math">Maths Marks:</label>
-          <input type="number" id="math" [(ngModel)]="newStudent.math" name="math"         min="0"
-          max="100" required />
+  <div class="mt-5 text-center">
+    <button
+      (click)="openModal()"
+      class="bg-purple-500 text-white px-4 py-2 rounded"
+    >
+      Add New Student
+    </button>
+    <button
+      (click)="openChartModal()"
+      class="bg-teal-500 text-white px-4 py-2 rounded ml-4"
+    >
+      Overall Performance Charts
+    </button>
+  </div>
 
-          <label for="chemistry">Chemistry Marks:</label>
-          <input type="number" id="chemistry" [(ngModel)]="newStudent.chemistry" name="chemistry"         min="0"
-          max="100" required />
+  <!--Add Student modal -->
+  <div *ngIf="showModal" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Add Student</h2>
+      <form (ngSubmit)="addStudent()">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="newStudent.name"
+          name="name"
+          required
+        />
 
-          <label for="english">English Marks:</label>
-          <input type="number" id="english" [(ngModel)]="newStudent.english" name="english"         min="0"
-          max="100" required />
+        <label for="physics">Physics Marks:</label>
+        <input
+          type="number"
+          id="physics"
+          [(ngModel)]="newStudent.physics"
+          name="physics"
+          min="0"
+          max="100"
+          required
+        />
 
-          <label for="hindi">Hindi Marks:</label>         
-          
-          <input type="number" id="hindi" [(ngModel)]="newStudent.hindi" name="hindi" required />
-    
-          <button type="submit" class="btn btn-success">Submit</button>
-        </form>
-      </div>
-    </div>
+        <label for="math">Maths Marks:</label>
+        <input
+          type="number"
+          id="math"
+          [(ngModel)]="newStudent.math"
+          name="math"
+          min="0"
+          max="100"
+          required
+        />
 
-    <!-- updatemodal -->
+        <label for="chemistry">Chemistry Marks:</label>
+        <input
+          type="number"
+          id="chemistry"
+          [(ngModel)]="newStudent.chemistry"
+          name="chemistry"
+          min="0"
+          max="100"
+          required
+        />
 
-    <div class="modal-backdrop" *ngIf="showUpdateModal"></div>
-    <div class="modal" *ngIf="showUpdateModal">
-      <form (ngSubmit)="updateStudent(selectedIndex)">
-        <h3>Update Student</h3>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            [(ngModel)]="selectedStudent.name"
-            name="name"
-            disabled="disabled"
-          />
-        </div>
-        <div class="form-group">
-          <label for="physics">Physics</label>
-          <input
-            type="number"
-            id="physics"
-            class="form-control"
-            [(ngModel)]="selectedStudent.physics"
-            name="physics"
-            min="0"
-            max="100"
+        <label for="english">English Marks:</label>
+        <input
+          type="number"
+          id="english"
+          [(ngModel)]="newStudent.english"
+          name="english"
+          min="0"
+          max="100"
+          required
+        />
 
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="math">Math</label>
-          <input
-            type="number"
-            id="math"
-            class="form-control"
-            [(ngModel)]="selectedStudent.math"
-            name="math"
-            min="0"
-            max="100"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="chemistry">Chemistry</label>
-          <input
-            type="number"
-            id="chemistry"
-            class="form-control"
-            [(ngModel)]="selectedStudent.chemistry"
-            name="chemistry"
-            min="0"
-            max="100"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="english">English</label>
-          <input
-            type="number"
-            id="english"
-            class="form-control"
-            [(ngModel)]="selectedStudent.english"
-            name="english"
-            min="0"
-            max="100"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="hindi">Hindi</label>
-          <input
-            type="number"
-            id="hindi"
-            class="form-control"
-            [(ngModel)]="selectedStudent.hindi"
-            name="hindi"
-            min="0"
-            max="100"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-success">Update</button>
-        <button type="button" class="btn btn-secondary" (click)="closeUpdateModal()">Cancel</button>
+        <label for="hindi">Hindi Marks:</label>
+
+        <input
+          type="number"
+          id="hindi"
+          [(ngModel)]="newStudent.hindi"
+          name="hindi"
+          required
+        />
+
+        <button type="submit" class="btn btn-success">Submit</button>
       </form>
     </div>
+  </div>
 
+  <!-- Update student data modal -->
 
-    <!--All Chart Modal Modal -->
-<div *ngIf="showchartModal" class="modal-overlay">
-  <div class="modal-content">
-    <h2>Overall Performance</h2>
-    <div id="chart" style="width: 100%; height: 400px;"></div>
-    <button (click)="closeChartModal()" class="close-modal-btn">Close</button>
+  <div class="modal-backdrop" *ngIf="showUpdateModal"></div>
+  <div class="modal" *ngIf="showUpdateModal">
+    <form (ngSubmit)="updateStudent(selectedIndex)">
+      <h3>Update Student</h3>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          [(ngModel)]="selectedStudent.name"
+          name="name"
+          disabled="disabled"
+        />
+      </div>
+      <div class="form-group">
+        <label for="physics">Physics</label>
+        <input
+          type="number"
+          id="physics"
+          class="form-control"
+          [(ngModel)]="selectedStudent.physics"
+          name="physics"
+          min="0"
+          max="100"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="math">Math</label>
+        <input
+          type="number"
+          id="math"
+          class="form-control"
+          [(ngModel)]="selectedStudent.math"
+          name="math"
+          min="0"
+          max="100"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="chemistry">Chemistry</label>
+        <input
+          type="number"
+          id="chemistry"
+          class="form-control"
+          [(ngModel)]="selectedStudent.chemistry"
+          name="chemistry"
+          min="0"
+          max="100"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="english">English</label>
+        <input
+          type="number"
+          id="english"
+          class="form-control"
+          [(ngModel)]="selectedStudent.english"
+          name="english"
+          min="0"
+          max="100"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="hindi">Hindi</label>
+        <input
+          type="number"
+          id="hindi"
+          class="form-control"
+          [(ngModel)]="selectedStudent.hindi"
+          name="hindi"
+          min="0"
+          max="100"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-success">Update</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="closeUpdateModal()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+
+  <!--All Chart Modal Modal -->
+  <div *ngIf="showchartModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Overall Performance</h2>
+      <div id="chart" style="width: 100%; height: 400px"></div>
+      <button (click)="closeChartModal()" class="close-modal-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Row Chart Modal -->
+  <div *ngIf="showRowModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>{{ selectedRowStudent?.name }}'s Performance</h2>
+      <div id="row-chart" style="width: 100%; height: 400px"></div>
+      <button (click)="closeRowModal()">Close</button>
+    </div>
   </div>
 </div>
-
-<!-- Row Modal -->
-<div *ngIf="showRowModal" class="modal-overlay">
-  <div class="modal-content">
-    <h2>{{ selectedRowStudent?.name }}'s Performance</h2>
-    <!-- Chart container -->
-    <div id="row-chart" style="width: 100%; height: 400px;"></div>
-    <!-- Close button -->
-    <button (click)="closeRowModal()">Close</button>
-  </div>
-</div>
-    
-  </div>
-  
